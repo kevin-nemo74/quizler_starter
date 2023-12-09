@@ -25,6 +25,15 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  List<Icon> answers = [];
+  List<String> questions = [
+    'You can lead a cow down stairs but not up stairs.',
+    'Approximately one quarter of human bones are in the feet.',
+    'A slug\'s blood is green.',
+  ];
+  int index = 0;
+  List<bool> correctAnswers = [false, true, true];
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,7 +46,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                'This is where the question text will go.',
+                questions[index],
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -61,6 +70,29 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 //The user picked true.
+                if (correctAnswers[index] == true) {
+                  answers.add(
+                    Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    ),
+                  );
+                } else {
+                  answers.add(
+                    Icon(
+                      Icons.close,
+                      color: Colors.red,
+                    ),
+                  );
+                }
+                setState(() {
+                  if (index == 2) {
+                    index = 0;
+                    answers.clear();
+                  } else {
+                    index++;
+                  }
+                });
               },
             ),
           ),
@@ -79,10 +111,39 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 //The user picked false.
+                if (correctAnswers[index] == true) {
+                  answers.add(
+                    Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    ),
+                  );
+                } else {
+                  answers.add(
+                    Icon(
+                      Icons.close,
+                      color: Colors.red,
+                    ),
+                  );
+                }
+                setState(() {
+                  if (index == 2) {
+                    index = 0;
+                    answers.clear();
+                  } else {
+                    index++;
+                  }
+                });
               },
             ),
           ),
         ),
+        Container(
+          width: double.infinity,
+          child: Row(
+            children: answers,
+          ),
+        )
         //TODO: Add a Row here as your score keeper
       ],
     );
